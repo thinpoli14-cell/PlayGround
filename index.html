@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#101619" />
+  <link rel="icon" href="data:," />
+  <title>Neon District — Open City</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+  <script type="importmap">
+    {"imports":{"three":"https://unpkg.com/three@0.166.1/build/three.module.js"}}
+  </script>
+</head>
+<body>
+  <div id="game"><canvas id="scene"></canvas>
+    <div class="vignette"></div>
+    <header class="topbar">
+      <div class="brand"><div class="brand-mark">N<span>✦</span></div><div><b>NEON DISTRICT</b><small>THE CITY IS YOURS</small></div></div>
+      <div class="district-tag"><i></i><span id="districtLabel">VESPER HEIGHTS</span><em>LOS SANTOS COUNTY</em></div>
+      <div class="top-actions"><button class="icon-btn" id="mapBtn" aria-label="Open map">⌖<span>MAP</span></button><button class="icon-btn" id="phoneBtn" aria-label="Open phone">▣<span>PHONE</span></button><button class="sound-btn" id="soundBtn" aria-label="Toggle sound">♫</button></div>
+    </header>
+    <section class="mission-card" id="missionCard"><div class="mission-kicker"><span class="pulse-dot"></span> CURRENT JOB <span class="job-id">#001</span></div><div class="mission-title" id="missionTitle">A FRESH START</div><div class="mission-copy" id="missionCopy">Find the glowing marker to meet your contact.</div><div class="mission-progress"><span id="missionProgress"></span></div><div class="mission-bottom"><span id="objectiveLabel">OBJECTIVE</span><b id="objectiveDistance">—</b></div></section>
+    <div class="cash-card"><span class="cash-icon">＄</span><div><small>CASH</small><b id="cashAmount">$2,450</b></div><span class="cash-divider"></span><div><small>REP</small><b class="rep-value" id="repAmount">00</b></div></div>
+    <div class="location-pill"><span>◉</span><b id="locationText">VESPER HEIGHTS</b><i>●</i></div>
+    <div class="map-inset" id="mapInset"><canvas id="minimap" width="180" height="180"></canvas><div class="map-inset-label">VESPER <span>•</span> CITY GRID</div><button id="expandMap" aria-label="Expand map">↗</button></div>
+    <div class="toast" id="toast"></div>
+    <div class="help-tip" id="helpTip"><span class="keycap">WASD</span> MOVE <span class="tip-dot">·</span><span class="keycap">SHIFT</span> SPRINT <span class="tip-dot">·</span><span class="keycap">E</span> INTERACT <span class="tip-dot">·</span> DRAG TO LOOK</div>
+    <div class="touch-controls" id="touchControls"><div class="stick-zone" id="stickZone"><div class="stick-ring"><div id="stickKnob"></div></div></div><div class="touch-actions"><button id="touchInteract">E</button><button id="touchSprint">»</button></div></div>
+    <div class="interaction-prompt" id="interactionPrompt"><span class="prompt-key">E</span><span id="promptText">TALK TO YOUR CONTACT</span><span class="prompt-arrow">↗</span></div>
+    <div class="loading" id="loading"><div class="loading-logo">N<span>✦</span></div><b>BUILDING YOUR CITY</b><div class="loading-track"><i></i></div></div>
+    <div class="intro" id="intro"><div class="intro-backdrop"></div><div class="intro-content"><div class="intro-eyebrow"><span></span> WELCOME TO LOS SANTOS <span></span></div><h1>MAKE YOUR<br><i>OWN</i> LEGACY.</h1><p>A sprawling city. A clean slate. Your move.</p><div class="select-label">CHOOSE YOUR PLAYER</div><div class="character-picks"><button class="character-card selected" data-character="miles"><div class="char-art miles-art"><span class="char-shadow"></span><span class="char-body"></span><span class="char-head"></span><span class="char-coat"></span></div><div class="char-info"><span>01 / THE DRIVER</span><b>MILES CARTER</b><small>Quick on his feet · Street smart</small></div><span class="check">✓</span></button><button class="character-card" data-character="zara"><div class="char-art zara-art"><span class="char-shadow"></span><span class="char-body"></span><span class="char-head"></span><span class="char-coat"></span></div><div class="char-info"><span>02 / THE FIXER</span><b>ZARA REYES</b><small>Cool under pressure · Connected</small></div><span class="check">✓</span></button></div><button class="play-btn" id="playBtn">ENTER THE CITY <span>↗</span></button><div class="intro-foot">A NEW ORIGINAL OPEN-CITY ADVENTURE <span>•</span> DESKTOP + MOBILE</div></div><div class="intro-side"><span class="side-line"></span><span>01 — 02</span><span class="side-vertical">VESPER HEIGHTS · 08:42 PM</span></div></div>
+    <div class="modal hidden" id="cityModal"><div class="modal-panel map-panel"><button class="close-modal" id="closeMap">×</button><div class="modal-kicker">CITY NAVIGATION</div><h2>YOUR <i>PLAYGROUND.</i></h2><p>Tap a marker to set your next destination.</p><div class="big-map-wrap"><canvas id="bigmap" width="500" height="500"></canvas><div class="map-legend"><span><i class="legend-player"></i> YOU</span><span><i class="legend-job"></i> JOB</span><span><i class="legend-landmark"></i> LANDMARK</span></div></div><div class="map-footer"><span>VESPER HEIGHTS</span><b>LOS SANTOS COUNTY <i>•</i> 2025</b></div></div></div>
+    <div class="phone-modal hidden" id="phoneModal"><div class="phone-shell"><div class="phone-notch"></div><button id="closePhone" class="phone-close">×</button><div class="phone-time">8:42 <span>◉ ◉ ▰</span></div><div class="phone-greeting">TUESDAY, MAY 21</div><div class="phone-clock">8:42<span>PM</span></div><div class="phone-weather">☀ &nbsp; CLEAR SKIES &nbsp; 74°</div><div class="phone-apps"><button class="app-icon app-map" id="phoneMap"><span>⌖</span><small>MAP</small></button><button class="app-icon app-jobs" id="phoneJobs"><span>✦</span><small>JOBS</small></button><button class="app-icon app-stats" id="phoneStats"><span>▤</span><small>STATS</small></button><button class="app-icon app-close" id="phoneDone"><span>↩</span><small>BACK</small></button></div><div class="phone-message"><span>NEW MESSAGE · 2M AGO</span><b>“You made it. Come find me by the old theater.”</b><small>— V</small></div><div class="phone-swipe"></div></div></div>
+    <div class="mission-complete hidden" id="completeBanner"><span>✦</span><div><b>JOB COMPLETE</b><small id="completeText">Good first impression.</small></div><strong>+ $500</strong></div>
+    <div class="rotate-tip" id="rotateTip">ROTATE FOR THE FULL CITY <span>↻</span></div>
+  </div>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
